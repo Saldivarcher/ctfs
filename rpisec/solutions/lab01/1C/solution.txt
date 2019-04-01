@@ -1,0 +1,53 @@
+Looking at the main function we can see the code does a simple if-else check:
+    0x080486fe    3d9a140000   cmp eax, 0x149a
+
+So the input should be 5274, this then puts us into the system call.
+
+[0x080485b0]> pdf @ sym.main
+╒ (fcn) sym.main 138
+│           0x080486ad    55           push ebp
+│           0x080486ae    89e5         mov ebp, esp
+│           0x080486b0    83e4f0       and esp, 0xfffffff0
+│           0x080486b3    83ec20       sub esp, 0x20
+│           0x080486b6    c70424d0870. mov dword [esp], 0x80487d0
+│           ; CODE (CALL) XREF from 0x08048566 (fcn.08048566)
+│           ; CODE (CALL) XREF from 0x08048596 (fcn.08048596)
+│           ; CODE (CALL) XREF from 0x08048560 (fcn.08048556)
+│           ; CODE (CALL) XREF from 0x080485a6 (fcn.080485a6)
+│           ; CODE (CALL) XREF from 0x08048576 (fcn.08048576)
+│           ; CODE (CALL) XREF from 0x08048586 (fcn.08048586)
+│           0x080486bd    e89efeffff   call 0x108048560 ; (sym.imp.puts)
+│              sym.imp.puts(unk)
+│           0x080486c2    c70424ee870. mov dword [esp], str.RPISECCrackMev1.0
+│           0x080486c9    e892feffff   call 0x108048560 ; (sym.imp.puts)
+│              sym.imp.puts()
+│           0x080486ce    c70424d0870. mov dword [esp], 0x80487d0
+│           0x080486d5    e886feffff   call 0x108048560 ; (sym.imp.puts)
+│              sym.imp.puts()
+│           0x080486da    c704240c880. mov dword [esp], 0x804880c
+│           0x080486e1    e86afeffff   call 0x108048550 ; (sym.imp.printf)
+│              sym.imp.printf()
+│           0x080486e6    8d44241c     lea eax, [esp+0x1c]
+│           0x080486ea    89442404     mov [esp+0x4], eax
+│           0x080486ee    c7042418880. mov dword [esp], str.d
+│           0x080486f5    e8a6feffff   call 0x1080485a0 ; (sym.imp.__isoc99_scanf)
+│              sym.imp.__isoc99_scanf()
+│           0x080486fa    8b44241c     mov eax, [esp+0x1c]
+│           0x080486fe    3d9a140000   cmp eax, 0x149a
+│       ┌─< 0x08048703    751f         jnz 0x8048724
+│       │   0x08048705    c704241b880. mov dword [esp], 0x804881b
+│       │   0x0804870c    e84ffeffff   call 0x108048560 ; (sym.imp.puts)
+│       │      sym.imp.puts()
+│       │   0x08048711    c704242b880. mov dword [esp], str.binsh
+│       │   0x08048718    e853feffff   call 0x108048570 ; (sym.imp.system)
+│       │      sym.imp.system()
+│       │   0x0804871d    b800000000   mov eax, 0x0
+│      ┌──< 0x08048722    eb11         jmp loc.08048735
+│      │└─> 0x08048724    c7042433880. mov dword [esp], 0x8048833
+│      │    0x0804872b    e830feffff   call 0x108048560 ; (sym.imp.puts)
+│      │       sym.imp.puts()
+│      │    0x08048730    b801000000   mov eax, 0x1
+│                 ; CODE (CALL) XREF from 0x08048722 (fcn.0804867e)
+├ loc.08048735 2
+│      └──> 0x08048735    c9           leave
+╘           0x08048736    c3           ret

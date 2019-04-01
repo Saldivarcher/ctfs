@@ -1,0 +1,23 @@
+The solution to this crackme is `flag{3sc0nd1d0_3h_M41s_G0st0S0}`
+
+To get this solution, I patched the binary to call the function `secret` within
+main. This is the disassembly of main after the patch.
+
+$ r2 hidden_patched
+-> aaa
+-> s sym.main
+-> pdf
+
+0x000011d5      55             push rbp
+0x000011d6      4889e5         mov rbp, rsp
+0x000011d9      488d3d580e00.  lea rdi, str.The_only_way_out_is_inward ; 0x2038 ; "The only way out is inward\n\n\n\n\n"                                                                                                  
+0x000011e0      e860ffffff     call sym.secret
+0x000011e5      488d3d6c0e00.  lea rdi, [0x00002058]       ; "..." ; const char *format
+0x000011ec      b800000000     mov eax, 0
+0x000011f1      e84afeffff     call sym.imp.printf         ; int printf(const char *format)
+0x000011f6      488d3d630e00.  lea rdi, str.Voce_consegue_achar_a_funcao_escondida ; 0x2060 ; "Voce consegue achar a funcao escondida?" ; const char *s                                                                   
+0x000011fd      e82efeffff     call sym.imp.puts           ; int puts(const char *s)
+0x00001202      b800000000     mov eax, 0
+0x00001207      5d             pop rbp
+0x00001208      c3             ret
+

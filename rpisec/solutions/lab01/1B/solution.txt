@@ -1,0 +1,33 @@
+In this RE challenge, there are two functions that are worth taking note of
+`test` and `decrypt`. In main we can see two parameters getting passed to
+`test`:
+
+│              sym.imp.__isoc99_scanf()
+│           0x08048c4e    8b44241c     mov eax, [esp+0x1c]
+│           0x08048c52    c74424040dd. mov dword [esp+0x4], 0x1337d00d
+│           0x08048c5a    890424       mov [esp], eax
+│           ; CODE (CALL) XREF from 0x08048a74 (unk)
+│           0x08048c5d    e812feffff   call 0x108048a74 ; (sym.test)
+
+
+One is the password that was inputted, the latter is 0x1337d00d.
+
+In `test`, 0x1337d00d is subtracted from the password inputted, and the
+resulting value is checked via a switch statement.
+
+│           0x08048a7a    8b4508       mov eax, [ebp+0x8]
+│           0x08048a7d    8b550c       mov edx, [ebp+0xc]
+│           0x08048a80    29c2         sub edx, eax
+
+
+`decrypt` is where the the system call the /bin/sh is made, and where the final
+check happens. The string "Q}|u`sfg~sf{}|a3" is what is going to be xor'd with
+the value that was passed in as a parameter, and that finialized string is
+going to be compared with "Congratulations!". So the value passed in varies
+from 0 - 0x15, or a random value. This is calculated from the password
+subtracted from 0x1337d00d.
+
+What I did to get that value is xor 'Q' and 'C' together to get 0x12. So the
+answer is 0x1337d00d - 0x12
+
+322424827

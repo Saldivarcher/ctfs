@@ -1,0 +1,22 @@
+Solution to this crackme is 540, now on how I got this value.
+
+1) Looking at the code there's two functions: `systemv` and `systemo`.
+    `systemv` seems to be a very simple function that sets the value of a
+    couple variables. `systemo` is where system input happens, as well as the
+    check for a valid password.
+
+2) 540 came from looking at the disassembly from `systemv` and `systemo`:
+
+    `systemv`:
+    mov    DWORD PTR [rbp-0x4],0x5
+    mov    DWORD PTR [rbp-0x8],0x7
+
+
+    `systemo`:
+    mov    eax,DWORD PTR [rbp-0x8] ; move value of 0x7 to eax
+    add    DWORD PTR [rbp-0x4],eax ; add 0x7, or content of eax, to 0x5
+    mov    eax,DWORD PTR [rbp-0x4] ; move 0xc to eax register
+    imul   eax,eax,0x2d            ; multiply 0x2d and 0xc which is 0x21c
+    mov    DWORD PTR [rbp-0xc],eax ; move 0x21c or 540 into rbp-0xc
+    ...
+    cmp    eax,DWORD PTR [rbp-0xc] ; compare the value inputed by the user to 540

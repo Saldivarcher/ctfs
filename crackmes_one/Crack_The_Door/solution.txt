@@ -1,0 +1,36 @@
+So the way I go this solution was to run it through GDB, and look at the comparisons 
+first hand.
+
+
+Here username needs to be 11 in length:
+   0x0000000000401554 <+2158>:  lea    rax,[rbp-0x80]
+   0x0000000000401558 <+2162>:  mov    rdi,rax
+   0x000000000040155b <+2165>:  call   0x400b30 <strlen@plt>
+   0x0000000000401560 <+2170>:  cmp    rax,0xc
+
+And password does as well:
+   0x00000000004015c0 <+2266>:  call   0x400b00 <fgets@plt>
+   0x00000000004015c5 <+2271>:  lea    rax,[rbp-0x70]
+   0x00000000004015c9 <+2275>:  mov    rdi,rax
+   0x00000000004015cc <+2278>:  call   0x400b30 <strlen@plt>
+   0x00000000004015d1 <+2283>:  cmp    rax,0xc
+
+
+
+
+The next step was looking at the comparison between the password, and another char[] that is set in a while loop.
+
+   0x00000000004016ef <+2569>:  movzx  edx,BYTE PTR [rbp+rax*1-0x60]
+   0x00000000004016f4 <+2574>:  mov    eax,DWORD PTR [rbp-0x444]
+   0x00000000004016fa <+2580>:  add    eax,0x1
+   0x00000000004016fd <+2583>:  cdqe
+   0x00000000004016ff <+2585>:  movzx  eax,BYTE PTR [rbp+rax*1-0x70]
+   0x0000000000401704 <+2590>:  cmp    dl,al ; Where password and the unknown char[] get compared
+
+
+
+ ---- :USERNAME: ----
+migsaldivar
+ ---- :PASSWORD: ----
+d9Q@[9X@B9p
+That's it ! You will have all the diamonds !

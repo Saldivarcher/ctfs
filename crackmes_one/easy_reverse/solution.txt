@@ -1,0 +1,17 @@
+1) Get past the `argc` check, by providing an argument.
+
+   cmp dword [var_4h], 2
+
+2) Pass the `strlen` comparison, which is 0xa or 10. So any string of 
+    length 10 will suffice.
+
+   cmp rax, 0xa
+
+3) To actually get the flag, the string provided must have the ascii
+    character of 0x40 or '@'. This is due to the `al` register check;
+    which is just a check on the lower 8 bits of the EAX register.
+    The EAX register contains the string passed in by the user.
+
+   cmp al, 0x40
+
+So the solution to this crackme is: "@@@@@@@@@@"

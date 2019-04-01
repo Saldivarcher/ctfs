@@ -1,0 +1,3 @@
+[submodule "rpisec/MBE"]
+	path = rpisec/MBE
+	url = https://github.com/RPISEC/MBE.git

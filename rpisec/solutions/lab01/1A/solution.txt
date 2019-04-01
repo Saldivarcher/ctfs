@@ -1,0 +1,10 @@
+One important function, `auth` returns 0 for authentication or 1 for no
+authentication. 
+
+What I did is, set eax = 1 when the check was made for the ptrace call,
+then compared the value to the serial number passed in. 
+
+0x08048b31    3b45f0       cmp eax, [ebp-0x10]
+
+username: migsaldivar
+serial:   6235924

@@ -1,0 +1,18 @@
+So, for this crackme there are a couple things that need to be looked at:
+
+080484c6  e889feffff         call    atoi
+080484cb  83c410             add     esp, 0x10
+080484ce  8945ec             mov     dword [ebp-0x14 {var_18_1}], eax     ;move atoi return value to ebx-0x14
+080484d2  8b45f0             mov     eax, dword [ebp-0x10 {var_14}]  {0x6}
+080484d5  89c2               mov     edx, eax  {0x6}    
+080484d7  0faf55f4           imul    edx, dword [ebp-0xc {var_10}]         ;multiply 0x6 and 0x2 -> 0xc
+080484db  8b45ec             mov     eax, dword [ebp-0x14 {var_18_1}]
+080484de  0fafc2             imul    eax, edx                              ;multiply 0xc and and atoi return value
+080484e1  8945f8             mov     dword [ebp-0x8 {var_c_2}], eax
+080484e4  31c0               xor     eax, eax  {0x0}
+080484e6  8b45fc             mov     eax, dword [ebp-0x4 {var_8}]  {0x4530}
+080484e9  3b45f8             cmp     eax, dword [ebp-0x8 {var_c_2}]        ;compare 0x4530 and result of 0xc*atoi_return_val
+
+So dividing 0x4530 by 0xc gives 1476 which is the correct value
+
+./easymath 1476
