@@ -1,0 +1,5 @@
+This solution uses `rand()` with no seed, so using gdb we can see that the
+variable `random` will become: 0x6b8b4567.
+
+Next we xor 0x6b8b4567 with 0xdeadbeef to get the solution:
+3039230856

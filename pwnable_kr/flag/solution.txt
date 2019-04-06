@@ -1,0 +1,5 @@
+First step is uncompress the binary(compressed with upx).
+
+After using gdb or binary ninja the flag is seen to be here:
+$rdx   : 0x0000000000496628  →  "UPX...? sounds like a delivery service :)"
+

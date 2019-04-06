@@ -1,0 +1,12 @@
+So the hashcode is `0x21dd09ec`, and since the check_password function divides the length of 20 string by 5,
+ip will look like:
+ip[0] = 0x41414141
+ip[1] = 0x41414141
+ip[2] = 0x41414141
+ip[3] = 0x41414141
+ip[4] = 0x41414141
+
+So if we divide `0x21dd09ec` by 5 the result will be 0x06c5cec8, but that multiplied by 5 is
+0x21dd09e8 which is 4 short from the value. Which is what leads to the the +0x4 string below
+
+$(python -c "print('\xc8\xce\xc5\x06'*4 + '\xcc\xce\xc5\x06')")
